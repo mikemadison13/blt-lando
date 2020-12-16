@@ -1,0 +1,20 @@
+{
+  "name": "mikemadison13/blt-lando",
+  "type": "library",
+  "description": "Lando integration for Acquia BLT.",
+  "license": "GPL-2.0+",
+  "authors":[
+    {
+      "name": "Mike Madison",
+      "homepage": "https://mikemadison.net",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {},
+  "extra": {},
+  "autoload": {
+    "psr-4": {
+      "Acquia\\BltLando\\": "./src/"
+    }
+  }
+}
