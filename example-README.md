@@ -10,7 +10,7 @@ This project is based on BLT 12.x with Lando local env, an open-source project t
 # If Starting From Scratch 
 1. Download the latest version of Drupal
 ```
-$ composer create-project drupal/recommended-project <machine_name>
+$ composer create-project --no-interaction acquia/drupal-recommended-project <machine_name>
 ```
 
 2. Confirm BLT is added as a composer dependency 
@@ -19,7 +19,6 @@ $ composer require acquia/blt:^12.0 --no-update
 ```
 
 3. Add the blt-lando plugin
-Change `"minimum-stability": "stable",` to ` "minimum-stability": "dev",` in your composer.json file
 ```
 $ composer require mikemadison13/blt-lando
 ```
