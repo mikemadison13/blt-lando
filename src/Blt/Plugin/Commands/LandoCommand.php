@@ -22,6 +22,8 @@ class LandoCommand extends BltTasks {
     $this->machineName = $this->getConfigValue('project.machine_name');
     $this->hostName = $this->getConfigValue('project.local.hostname');
     $this->vmConfig = $this->getConfigValue('repo.root') . '/.lando.yml';
+    $this->projectReadme = $this->getConfigValue('repo.root') . '/.README.md';
+
     $result = $this->taskFilesystemStack()
       ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/.lando.yml', $this->vmConfig, TRUE)
       ->stopOnFail()
@@ -32,11 +34,24 @@ class LandoCommand extends BltTasks {
       throw new BltException("Could not initialize Lando configuration.");
     }
 
+    // Create a project README file with Lando and BLT steps.
+    $readme = $this->taskFilesystemStack()
+      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/example-README.md', $this->getConfigValue('repo.root') . 'README.md', true)
+      ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+      ->run();
+    if (!$readme->wasSuccessful()) {
+      throw new BltException("Could not copy example.README.md template to project folder.");
+    }
+
     $this->taskReplaceInFile($this->vmConfig)
       ->from('<host_name>')
       ->to($this->hostName)
       ->run();
     $this->taskReplaceInFile($this->vmConfig)
+      ->from('<machine_name>')
+      ->to($this->machineName)
+      ->run();
+    $this->taskReplaceInFile($this->projectReadme)
       ->from('<machine_name>')
       ->to($this->machineName)
       ->run();
@@ -80,6 +95,7 @@ class LandoCommand extends BltTasks {
         ->to("host' => 'database',")
         ->run();
     }
+
     catch (BltException $e) {
       throw new BltException("Could not init local BLT or settings files.");
     }
