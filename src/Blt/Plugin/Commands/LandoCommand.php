@@ -22,7 +22,7 @@ class LandoCommand extends BltTasks {
     $this->machineName = $this->getConfigValue('project.machine_name');
     $this->hostName = $this->getConfigValue('project.local.hostname');
     $this->vmConfig = $this->getConfigValue('repo.root') . '/.lando.yml';
-    $this->projectReadme = $this->getConfigValue('repo.root') . '/.README.md';
+    $this->projectReadme = $this->getConfigValue('repo.root') . '/README.md';
 
     $result = $this->taskFilesystemStack()
       ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/.lando.yml', $this->vmConfig, TRUE)
@@ -35,11 +35,11 @@ class LandoCommand extends BltTasks {
     }
 
     // Create a project README file with Lando and BLT steps.
-    $readme = $this->taskFilesystemStack()
-      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/example-README.md', $this->getConfigValue('repo.root') . 'README.md', true)
+    $result = $this->taskFilesystemStack()
+      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/example-README.md', $this->getConfigValue('repo.root') . '/README.md', true)
       ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
       ->run();
-    if (!$readme->wasSuccessful()) {
+    if (!$result->wasSuccessful()) {
       throw new BltException("Could not copy example.README.md template to project folder.");
     }
 
