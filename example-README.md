@@ -138,7 +138,7 @@ or  If it is a multisite you can identify a specific site.
 $ lando blt setup --site=<machine_name>
 ```
 
-7. Log into your site with drush.
+6. Log into your site with drush.
 Access the site and do necessary work at #LOCAL_DEV_URL by running the following commands.
 ```
 $ cd docroot
