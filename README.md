@@ -21,6 +21,36 @@ Note: the template YAML file assumes standard BLT steps for builds and is based 
 
 Please carefully review the created .lando.yml file prior to running `lando start`
 
+## Adding Solr
+
+The .lando.yml file included with this plugin does not include an Apache Solr service by default because not all projects need Solr!
+
+However, if you wish to use Solr, simply add an additional service to the .lando.yml file like the following:
+
+```yaml
+services:
+  solr:
+    type: solr:7.7
+    core: drupal
+    portforward: true
+```
+
+Then rebuild your VM using `lando rebuild`.
+
+Note that for Search API you'll need the following information:
+
+Connector: standard
+scheme: http
+host: solr
+port: 8983
+path: /
+core: drupal 
+
+notes: 
+* the core is configurable so if you want it to be something else, change the core definition in the service definition and update the solr config to be the same!
+* the internal / localhost connectivity for the server is NOT the same as the service url that lando will report (and that's ok)
+* even though Search API ships a config file, I have not been able to get the solr service to recognize and pull the config file from the appserver (so there is not currently a config path here)
+
 # License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 2 as published by the Free Software Foundation.
