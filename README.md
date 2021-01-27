@@ -51,6 +51,27 @@ notes:
 * the internal / localhost connectivity for the server is NOT the same as the service url that lando will report (and that's ok)
 * even though Search API ships a config file, I have not been able to get the solr service to recognize and pull the config file from the appserver (so there is not currently a config path here)
 
+## Debugging with XDebug
+
+Between the Drupal8 recipe for Lando and this config file, XDebug is pre-loaded onto the appserver (web) container. You will need to toggle XDebug on when you wnat to use it, which I have provided simple tooling for:
+
+```yaml
+lando xdebug-on
+lando xdebug-off
+```
+
+No restart of the VM is required, just these commands!
+
+However, simply turning on XDebug isn't enough, as you'll still have to manually configure PHPStorm for each project. At a high level, this is broken down into three steps:
+
+1. Add a server in PHPStorm (or other IDE)
+2. Add a PHP Web Page debug config (using the server)
+3. Instruct both the IDE and your browser to start debugging / listening 
+
+Here's an [article on configuring PHPStorm](https://docs.lando.dev/guides/lando-phpstorm.html). Note that the Drupal8 recipe comes pre-configured to debug in PHPStorm. Other IDEs will require some additional tweaks.
+
+Finally, it is possible despite fully configuring that XDebug is still not functioning. [This article](https://untoldhq.com/blog/2019/08/02/when-lando-phpstorm-and-xdebug-setup-gets-hairy) walks through additional steps that will ensure that PHPStorm detects that the PHP version running inside the container has XDebug.
+
 # License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 2 as published by the Free Software Foundation.
