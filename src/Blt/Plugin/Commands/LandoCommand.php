@@ -85,10 +85,9 @@ class LandoCommand extends BltTasks {
       // Re-init settings after old settings are removed.
       $this->invokeCommand('blt:init:settings');
 
-      // @todo For some reason the initial settings file still has the stock drupal credentials and not drupal8.
       $this->taskReplaceInFile($this->getConfigValue('docroot')  . '/sites/default/settings/local.settings.php')
         ->from('drupal')
-        ->to('drupal8')
+        ->to('drupal9')
         ->run();
       $this->taskReplaceInFile($this->getConfigValue('docroot')  . '/sites/default/settings/local.settings.php')
         ->from("host' => 'localhost',")
