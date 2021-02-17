@@ -25,7 +25,7 @@ class LandoCommand extends BltTasks {
     $this->projectReadme = $this->getConfigValue('repo.root') . '/README.md';
 
     $result = $this->taskFilesystemStack()
-      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/.lando.yml', $this->vmConfig, TRUE)
+      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/.lando.yml', $this->vmConfig, FALSE)
       ->stopOnFail()
       ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
       ->run();
@@ -36,7 +36,7 @@ class LandoCommand extends BltTasks {
 
     // Create a project README file with Lando and BLT steps.
     $result = $this->taskFilesystemStack()
-      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/example-README.md', $this->getConfigValue('repo.root') . '/README.md', true)
+      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/example-README.md', $this->getConfigValue('repo.root') . '/README.md', FALSE)
       ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
       ->run();
     if (!$result->wasSuccessful()) {
@@ -58,8 +58,8 @@ class LandoCommand extends BltTasks {
 
     // Copy BLT local config template (aka example.local.blt.yml).
     $result = $this->taskFilesystemStack()
-      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/config/blt/example.local.blt.yml', $this->getConfigValue('repo.root') . '/blt/example.local.blt.yml', true)
-      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/config/blt/local.blt.yml', $this->getConfigValue('repo.root') . '/blt/local.blt.yml', true)
+      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/config/blt/example.local.blt.yml', $this->getConfigValue('repo.root') . '/blt/example.local.blt.yml', FALSE)
+      ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/config/blt/local.blt.yml', $this->getConfigValue('repo.root') . '/blt/local.blt.yml', FALSE)
       ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
       ->run();
 
@@ -86,8 +86,8 @@ class LandoCommand extends BltTasks {
       $this->invokeCommand('blt:init:settings');
 
       $this->taskReplaceInFile($this->getConfigValue('docroot')  . '/sites/default/settings/local.settings.php')
-        ->from('drupal')
-        ->to('drupal9')
+        ->from('\'drupal\'')
+        ->to('\'drupal9\'')
         ->run();
       $this->taskReplaceInFile($this->getConfigValue('docroot')  . '/sites/default/settings/local.settings.php')
         ->from("host' => 'localhost',")
