@@ -61,13 +61,7 @@ Setup the container by modifying your .lando.yml  with the configuration from th
 $ lando start
 ```
 
-9. Setup a local blt alias.
-If the blt alias is not available use this command outside and inside vagrant (one time only).
-```
-$ lando composer run-script blt-alias
-```
-
-10. Setup a local Drupal site with an empty database.
+9. Setup a local Drupal site with an empty database.
 Use BLT to setup the site with configuration.  If it is a multisite you can identify a specific site.
 ```
 $ lando blt setup
@@ -77,7 +71,7 @@ or
 $ lando blt setup --site=[sitename]
 ```
 
-11. Log into your site with drush.
+10. Log into your site with drush.
 Access the site and do necessary work at #LOCAL_DEV_URL by running the following commands.
 ```
 $ cd web
