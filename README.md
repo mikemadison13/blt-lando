@@ -9,17 +9,25 @@ This plugin is **community-created** and **community-supported**. Acquia does no
 
 To use this plugin, you must already have a Drupal project using BLT 11 (or higher).
 
-In your project, require the plugin with Composer:
+1. Add this plugin to your project using composer: 
 
-`composer require mikemadison13/blt-lando`
+`composer require --dev mikemadison13/blt-lando`
 
-Initialize the Gitlab integration by calling `blt recipes:vm:lando`, which is provided by this plugin.
+Note: if you are using drupal/recommended-project (or another project template) that sets the minimum-stability to "stable" you may have trouble installing this plugin. You can either change your stability to "dev" or more specifically composer require like:
 
-This will copy a template version of the .lando.yml to your project root directory. Make sure to commit this as well as your updated composer.json to Git.
+`composer require mikemadison13/blt-lando:dev-main`
 
-Note: the template YAML file assumes standard BLT steps for builds and is based upon the drupal8 community image. The plugin will attempt to customize the file based on your project's machine and host names as defined in your blt.yml file.
+2. Ensure that your blt/blt.yml file has properly set the `project.machine_name` key (as this will be used during template generation by this plugin).
 
-Please carefully review the created .lando.yml file prior to running `lando start`
+3. Initialize the Gitlab integration by calling `blt recipes:vm:lando`, which is provided by this plugin.
+
+This will copy a template version of the .lando.yml to your project root directory and instantiate a number of other BLT and Drupal settings files required to make Drupal bootstrap properly in a Lando container. Make sure to commit these files (where appropriate, remember that BLT gitignores local settings and local blt files by default, and these "local" specific files should not be committed) as well as your updated composer.json to Git.
+
+Note: the template YAML file assumes standard BLT steps for builds and is based upon the drupal9 community image. The plugin will attempt to customize the file based on your project's machine and host names as defined in your blt.yml file.
+
+4. Carefully review the created .lando.yml file prior to running `lando start`
+
+5. Once Lando has been provisioned, run `lando blt setup` to install Drupal via BLT.
 
 ## Adding Solr
 
