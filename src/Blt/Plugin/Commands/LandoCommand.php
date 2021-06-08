@@ -101,7 +101,7 @@ class LandoCommand extends BltTasks {
 
       $this->taskReplaceInFile($this->getConfigValue('docroot')  . '/sites/default/settings/local.settings.php')
         ->from('\'drupal\'')
-        ->to('\'drupal9\'')
+        ->to('\'acquia\'')
         ->run();
       $this->taskReplaceInFile($this->getConfigValue('docroot')  . '/sites/default/settings/local.settings.php')
         ->from("host' => 'localhost',")

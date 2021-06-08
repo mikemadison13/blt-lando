@@ -12,9 +12,9 @@
 
 drupal:
   db:
-    database: drupal9
-    username: drupal9
-    password: drupal9
+    database: acquia
+    username: acquia
+    password: acquia
     host: database
 
 project:
