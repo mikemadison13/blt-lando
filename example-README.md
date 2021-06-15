@@ -121,15 +121,27 @@ $ composer install
 $ lando start
 ```
 
-5. Setup a local Drupal site with an empty database. The blt-cohesion composer package will run all necessary site studio commands. 
+5. Setup a local Drupal site
+
+There are two options to setup a local Drupal site: with a clean database, or with a copy of a database from a cloud environment. 
+   
+    1. Setup a local Drupal site with an empty database. The blt-cohesion composer package will run all necessary site studio commands. 
 Use BLT to setup the site with configuration.
-```
-$ lando blt setup
-```
-or  If it is a multisite you can identify a specific site.
-```
-$ lando blt setup --site=<machine_name>
-```
+    
+    $ lando blt setup
+
+    
+    or  If it is a multisite you can identify a specific site.
+    
+
+    $ lando blt setup --site=<machine_name>
+    
+   
+    2. Setup a local Drupal site with an existing database. If you have an existing database you can use BLT to pull down the database from your Cloud environment.
+    
+
+    $ lando blt sync
+     
 
 6. Log into your site with drush.
 Access the site and do necessary work at #LOCAL_DEV_URL by running the following commands.
