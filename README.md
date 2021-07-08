@@ -29,6 +29,15 @@ Note: the template YAML file assumes standard BLT steps for builds and is based 
 
 5. Once Lando has been provisioned, run `lando blt setup` to install Drupal via BLT.
 
+## Constraining Composer
+
+Now that composer 2 is out, Lando should default to composer 2. HOWEVER if you are running much older versions of Drupal, you may still need composer 1. You can add this into your project manually with the following config key:
+
+```yaml
+config:
+  composer_version: '1.10.22'
+```
+
 ## Adding Solr
 
 The .lando.yml file included with this plugin does not include an Apache Solr service by default because not all projects need Solr!
