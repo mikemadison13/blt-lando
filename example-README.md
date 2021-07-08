@@ -13,25 +13,24 @@ This project is based on BLT 12.x with Lando local env, an open-source project t
 $ composer create-project --no-interaction acquia/drupal-recommended-project <machine_name>
 ```
 
-2. Confirm BLT is added as a composer dependency 
-```
-$ composer require acquia/blt:^12.0 --no-update
-```
 
-3. Add the blt-lando plugin
+2. Add the blt-lando plugin
 ```
 $ composer require mikemadison13/blt-lando
 ```
 
-4. Run composer update 
-```
-$ composer update
-```
 
-5. Setup your container settings by modifying your .lando.yml file. 
+3. Setup your container settings by modifying your .lando.yml file. 
 ```
 $ blt recipes:vm:lando
 ```
+
+4. Finalize settings and setup
+```
+$ blt setup
+```
+
+Note: if you receive a failure during the install related to the database, please check the docroot/sites/default/settings/local.settings.php file to ensure that the proper credentials are in the database array. This is a very common problem with Lando!
 
 
 # Working from an existing project
@@ -74,7 +73,6 @@ $ lando blt setup --site=[sitename]
 10. Log into your site with drush.
 Access the site and do necessary work at #LOCAL_DEV_URL by running the following commands.
 ```
-$ cd web
 $ lando drush uli
 ```
 
@@ -101,9 +99,10 @@ $ lando blt sync
 ---
 # To start developing every time 
 
-1. Pull from the github repository 
+1. Start clean from the upstream's integration branch
 ```
-git pull upstream develop
+git fetch upstream
+git rebase upstream/develop
 ```
 
 2. Create a new feature branch from develop
