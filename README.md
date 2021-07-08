@@ -5,6 +5,12 @@ This is an [Acquia BLT](https://github.com/acquia/blt) plugin providing [Lando](
 
 This plugin is **community-created** and **community-supported**. Acquia does not provide any direct support for this software or provide any warranty as to its stability.
 
+## OS Support ##
+
+While Lando itself can be used with any operating system (see their [system requirements here](https://docs.lando.dev/basics/installation.html)) this plugin has been built with a Mac OS host in mind. See my [blog for details on setting up a Macbook for work as a host machine](https://mikemadison.net/blog/2020/7/21/setting-up-a-new-macbook-pro-for-local-development). 
+
+This project can be used on non-Windows hosts, but you will have to remove the ssh-fix tooling and the related ssh code (as it it specific to Mac OS).
+
 ## Installation and usage
 
 To use this plugin, you must already have a Drupal project using BLT 11 (or higher).
