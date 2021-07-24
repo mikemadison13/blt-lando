@@ -8,6 +8,8 @@ services:
   appserver:
     xdebug: false
     build_as_root:
+      - bash /app/.lando/scripts/configure-syslog.sh
+      - bash /app/.lando/scripts/configure-xhprof.sh
       - apt-get update
       - apt-get install libxss1
       - echo "Run additional build commands here. Run lando rebuild after updating this file."
@@ -47,6 +49,12 @@ tooling:
     service: appserver
     description: Fix ssh auth sock permission for MacOS users. Lando rebuild fixes the problem as well.
     cmd: "/bin/chgrp www-data /run/host-services/ssh-auth.sock && /bin/chmod g+w /run/host-services/ssh-auth.sock"
+    user: root
+  logs-drupal:
+    service: appserver
+    description: Displays and tails Drupal logs using syslog module (because drush wd-show no longer supports tail)
+    cmd:
+      - /app/.lando/scripts/logs-drupal.sh
     user: root
 events:
   post-start:
