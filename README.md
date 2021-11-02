@@ -25,7 +25,7 @@ Note: if you are using drupal/recommended-project (or another project template) 
 
 2. Ensure that your blt/blt.yml file has properly set the `project.machine_name` key (as this will be used during template generation by this plugin).
 
-3. Initialize the Gitlab integration by calling `blt recipes:vm:lando`, which is provided by this plugin.
+3. Initialize the Lando integration by calling `blt recipes:vm:lando`, which is provided by this plugin.
 
 This will copy a template version of the .lando.yml to your project root directory and instantiate a number of other BLT and Drupal settings files required to make Drupal bootstrap properly in a Lando container. Make sure to commit these files (where appropriate, remember that BLT gitignores local settings and local blt files by default, and these "local" specific files should not be committed) as well as your updated composer.json to Git.
 
