@@ -6,7 +6,6 @@ config:
   php: '7.4'
 services:
   appserver:
-    xdebug: false
     build_as_root:
       - apt-get update
       - apt-get install libxss1
