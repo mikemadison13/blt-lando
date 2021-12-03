@@ -5,6 +5,9 @@ config:
   xdebug: false
   php: '7.4'
 services:
+  xdebug: false
+  config:
+    php: .lando/php.ini
   appserver:
     build_as_root:
       - apt-get update
@@ -24,6 +27,7 @@ services:
           source: "${LANDO_SSH_AUTH_SOCK:-/run/host-services/ssh-auth.sock}"
           target: /run/host-services/ssh-auth.sock
       environment:
+        PHP_IDE_CONFIG: "serverName=appserver"
         DRUSH_OPTIONS_URI: "https://<host_name>/"
         SSH_AUTH_SOCK: /run/host-services/ssh-auth.sock
       cap_add:
@@ -48,5 +52,7 @@ tooling:
     cmd: "/bin/chgrp www-data /run/host-services/ssh-auth.sock && /bin/chmod g+w /run/host-services/ssh-auth.sock"
     user: root
 events:
+  pre-start:
+    - appserver: "rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && /etc/init.d/apache2 reload"
   post-start:
     - appserver: test -e ~/.ssh/config || printf 'Host *\n  AddKeysToAgent yes\n' > ~/.ssh/config
