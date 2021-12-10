@@ -7,7 +7,7 @@ This plugin is **community-created** and **community-supported**. Acquia does no
 
 ## OS Support ##
 
-While Lando itself can be used with any operating system (see their [system requirements here](https://docs.lando.dev/basics/installation.html)) this plugin has been built with a Mac OS host in mind. See my [blog for details on setting up a Macbook for work as a host machine](https://mikemadison.net/blog/2020/7/21/setting-up-a-new-macbook-pro-for-local-development). 
+While Lando itself can be used with any operating system (see their [system requirements here](https://docs.lando.dev/basics/installation.html)) this plugin has been built with a Mac OS host in mind. See my [blog for details on setting up a Macbook for work as a host machine](https://mikemadison.net/blog/2020/7/21/setting-up-a-new-macbook-pro-for-local-development).
 
 This project can be used on non-Windows hosts, but you will have to remove the ssh-fix tooling and the related ssh code (as it it specific to Mac OS).
 
@@ -15,7 +15,7 @@ This project can be used on non-Windows hosts, but you will have to remove the s
 
 To use this plugin, you must already have a Drupal project using BLT 11 (or higher).
 
-1. Add this plugin to your project using composer: 
+1. Add this plugin to your project using composer:
 
 `composer require --dev mikemadison13/blt-lando --with-all-dependencies`
 
@@ -44,6 +44,60 @@ config:
   composer_version: '1.10.22'
 ```
 
+## Configuring for Multisite
+
+Configuring a local environment for multisite requires both a change to your .lando file (and rebuilding) AND configuration of your Drupal application via sites.php and the sites directory.
+
+The following assumes that your first / default / initial site will use the "default" folder in Drupal, and the default database server that comes provisioned with the recipe.
+
+Additional sites require two changes each in the .lando.yml.
+
+### Adding Appserver Proxy URLs
+
+If you are setting up a [domain-based multisite approach](https://mikemadison.net/blog/2021/12/3/drupal-domain-vs-path-based-multisite-configuration), you should provide a new proxy for each site in your multisite setup. If you are using [path-based multisites](https://mikemadison.net/blog/2021/12/3/drupal-domain-vs-path-based-multisite-configuration) this step isn't necessary.
+
+```yaml
+proxy:
+  appserver:
+    - zero.lndo.site
+    - first.lndo.site
+    - second.lndo.site
+    - third.lndo.site
+```
+
+The proxy config should be a separate section in the .lando.yml file. Note that your default site does need an entry here.
+
+### Adding Databases
+
+Each site beyond the default will need additional service entries for databases.
+
+```yaml
+services:
+  first:
+    type: mysql:5.7
+    portforward: true
+    creds:
+      user: drupal9
+      password: drupal9
+      database: first
+    second:
+      type: mysql:5.7
+      portforward: true
+      creds:
+        user: drupal9
+        password: drupal9
+        database: second
+    third:
+      type: mysql:5.7
+      portforward: true
+      creds:
+        user: drupal9
+        password: drupal9
+        database: third
+```
+
+Make sure to set the database credentials in each site's settings file to match. The db host will be the service name (e.g. first).
+
 ## Adding Solr
 
 The .lando.yml file included with this plugin does not include an Apache Solr service by default because not all projects need Solr!
@@ -67,9 +121,9 @@ scheme: http
 host: solr
 port: 8983
 path: /
-core: drupal 
+core: drupal
 
-notes: 
+notes:
 * the core is configurable so if you want it to be something else, change the core definition in the service definition and update the solr config to be the same!
 * the internal / localhost connectivity for the server is NOT the same as the service url that lando will report (and that's ok)
 * even though Search API ships a config file, I have not been able to get the solr service to recognize and pull the config file from the appserver (so there is not currently a config path here)
@@ -89,7 +143,7 @@ However, simply turning on XDebug isn't enough, as you'll still have to manually
 
 1. Add a server in PHPStorm (or other IDE)
 2. Add a PHP Web Page debug config (using the server)
-3. Instruct both the IDE and your browser to start debugging / listening 
+3. Instruct both the IDE and your browser to start debugging / listening
 
 Here's an [article on configuring PHPStorm](https://docs.lando.dev/guides/lando-phpstorm.html). Note that the Drupal8 recipe comes pre-configured to debug in PHPStorm. Other IDEs will require some additional tweaks.
 
