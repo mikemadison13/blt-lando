@@ -17,11 +17,15 @@ To use this plugin, you must already have a Drupal project using BLT 11 (or high
 
 1. Add this plugin to your project using composer:
 
+If using composer 2:
+`composer require --dev mikemadison13/blt-lando -W`
+
+If using composer 1: (I strongly recommend you [update to composer 2](https://mikemadison.net/blog/2020/10/14/how-and-why-to-update-to-composer-2))
 `composer require --dev mikemadison13/blt-lando --with-all-dependencies`
 
 Note: if you are using drupal/recommended-project (or another project template) that sets the minimum-stability to "stable" you may have trouble installing this plugin. You can either change your stability to "dev" or more specifically composer require like:
 
-`composer require mikemadison13/blt-lando:dev-main --with-all-dependencies`
+`composer require mikemadison13/blt-lando:dev-main -W`
 
 2. Ensure that your blt/blt.yml file has properly set the `project.machine_name` key (as this will be used during template generation by this plugin).
 
