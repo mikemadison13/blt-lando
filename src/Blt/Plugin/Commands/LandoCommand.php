@@ -24,6 +24,7 @@ class LandoCommand extends BltTasks {
     $this->vmConfig = $this->getConfigValue('repo.root') . '/.lando.yml';
     $this->projectReadme = $this->getConfigValue('repo.root') . '/README.md';
 
+    // Creat .lando.yml file.
     $result = $this->taskFilesystemStack()
       ->copy($this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/.lando.yml', $this->vmConfig, FALSE)
       ->stopOnFail()
@@ -32,6 +33,19 @@ class LandoCommand extends BltTasks {
 
     if (!$result->wasSuccessful()) {
       throw new BltException("Could not initialize Lando configuration.");
+    }
+
+    // Place php.ini for XDebug.
+    $result = $this->taskFilesystemStack()
+        ->copy(
+            $this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/config/php.ini',
+            $this->getConfigValue('repo.root') . '/.lando/php.ini', FALSE)
+        ->stopOnFail()
+        ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+        ->run();
+
+    if (!$result->wasSuccessful()) {
+        throw new BltException("Could not copy php.ini for XDebug configuration.");
     }
 
     // Create a project README file with Lando and BLT steps.

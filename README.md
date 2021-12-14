@@ -130,24 +130,26 @@ notes:
 
 ## Debugging with XDebug
 
-Between the Drupal8 recipe for Lando and this config file, XDebug is pre-loaded onto the appserver (web) container. You will need to toggle XDebug on when you wnat to use it, which I have provided simple tooling for:
+Between the recipe for Lando and this config file, XDebug is largely pre-configured. However, in the .lando.yml the appserver's xdebug key must be changed from false to true and then the container must be rebuilt. Once enabled, you can toggle XDebug on when you want to use it, which I have provided simple tooling for:
 
 ```yaml
 lando xdebug-on
 lando xdebug-off
 ```
 
-No restart of the VM is required, just these commands!
-
 However, simply turning on XDebug isn't enough, as you'll still have to manually configure PHPStorm for each project. At a high level, this is broken down into three steps:
 
-1. Add a server in PHPStorm (or other IDE)
+1. Add a server in PHPStorm (or other IDE). The plugin assu,es you will same this 'appserver'
 2. Add a PHP Web Page debug config (using the server)
 3. Instruct both the IDE and your browser to start debugging / listening
 
-Here's an [article on configuring PHPStorm](https://docs.lando.dev/guides/lando-phpstorm.html). Note that the Drupal8 recipe comes pre-configured to debug in PHPStorm. Other IDEs will require some additional tweaks.
+Here's an [article on configuring PHPStorm](https://www.dannyenglander.com/blog/drupal-9-devops-recipe-for-setting-up-xdebug-3-with-lando-and-phpstorm/). Note that the recipe comes pre-configured to debug in PHPStorm. Other IDEs will require some additional tweaks.
 
 Finally, it is possible despite fully configuring that XDebug is still not functioning. [This article](https://untoldhq.com/blog/2019/08/02/when-lando-phpstorm-and-xdebug-setup-gets-hairy) walks through additional steps that will ensure that PHPStorm detects that the PHP version running inside the container has XDebug.
+
+### Warning:
+
+Once configured for XDebug and PHPStorm, your project may begin hanging on Drush or other php terminal-based commands. IF so, confirm that you haven't tripped the debugger in the IDE!
 
 # License
 
