@@ -33,7 +33,7 @@ Note: if you are using drupal/recommended-project (or another project template) 
 
 This will copy a template version of the .lando.yml to your project root directory and instantiate a number of other BLT and Drupal settings files required to make Drupal bootstrap properly in a Lando container. Make sure to commit these files (where appropriate, remember that BLT gitignores local settings and local blt files by default, and these "local" specific files should not be committed) as well as your updated composer.json to Git.
 
-Note: the template YAML file assumes standard BLT steps for builds and is based upon the drupal9 community image. The plugin will attempt to customize the file based on your project's machine and host names as defined in your blt.yml file.
+Note: the template YAML file assumes standard BLT steps for builds and is based upon the acquia image. The plugin will attempt to customize the file based on your project's machine and host names as defined in your blt.yml file.
 
 4. Carefully review the created .lando.yml file prior to running `lando start`
 
@@ -81,22 +81,22 @@ services:
     type: mysql:5.7
     portforward: true
     creds:
-      user: drupal9
-      password: drupal9
+      user: acquia
+      password: acquia
       database: first
     second:
       type: mysql:5.7
       portforward: true
       creds:
-        user: drupal9
-        password: drupal9
+        user: acquia
+        password: acquia
         database: second
     third:
       type: mysql:5.7
       portforward: true
       creds:
-        user: drupal9
-        password: drupal9
+        user: acquia
+        password: acquia
         database: third
 ```
 

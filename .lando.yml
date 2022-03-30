@@ -1,5 +1,5 @@
 name: <machine_name>
-recipe: drupal9
+recipe: acquia
 config:
   webroot: docroot
   xdebug: false
