@@ -3,7 +3,6 @@
 namespace Acquia\BltLando\Blt\Plugin\Commands;
 
 use Acquia\Blt\Robo\BltTasks;
-use Acquia\Blt\Robo\Common\YamlWriter;
 use Acquia\Blt\Robo\Exceptions\BltException;
 use Robo\Contract\VerbosityThresholdInterface;
 
@@ -16,6 +15,7 @@ class LandoCommand extends BltTasks {
    * Initializes default Lando configuration for this project.
    *
    * @command recipes:vm:lando
+   *
    * @throws \Acquia\Blt\Robo\Exceptions\BltException
    */
   public function landoInit() {
@@ -37,15 +37,15 @@ class LandoCommand extends BltTasks {
 
     // Place php.ini for XDebug.
     $result = $this->taskFilesystemStack()
-        ->copy(
+      ->copy(
             $this->getConfigValue('repo.root') . '/vendor/mikemadison13/blt-lando/config/php.ini',
             $this->getConfigValue('repo.root') . '/.lando/php.ini', FALSE)
-        ->stopOnFail()
-        ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-        ->run();
+      ->stopOnFail()
+      ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+      ->run();
 
     if (!$result->wasSuccessful()) {
-        throw new BltException("Could not copy php.ini for XDebug configuration.");
+      throw new BltException("Could not copy php.ini for XDebug configuration.");
     }
 
     // Create a project README file with Lando and BLT steps.
@@ -84,10 +84,10 @@ class LandoCommand extends BltTasks {
     // Initialize local settings.
     try {
       $result = $this->taskFilesystemStack()
-        // TODO: Add multisite local settings support as in blt:init:settings.
-        ->remove($this->getConfigValue('repo.root')  . '/blt/local.blt.yml')
+        // @todo Add multisite local settings support as in blt:init:settings.
+        ->remove($this->getConfigValue('repo.root') . '/blt/local.blt.yml')
         ->remove($this->getConfigValue('drupal.local_settings_file'))
-        ->remove($this->getConfigValue('docroot')  . '/sites/default/local.drush.yml')
+        ->remove($this->getConfigValue('docroot') . '/sites/default/local.drush.yml')
         ->stopOnFail()
         ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
         ->run();
@@ -99,11 +99,11 @@ class LandoCommand extends BltTasks {
       // Re-init settings after old settings are removed.
       $this->invokeCommand('blt:init:settings');
 
-      $this->taskReplaceInFile($this->getConfigValue('docroot')  . '/sites/default/settings/local.settings.php')
+      $this->taskReplaceInFile($this->getConfigValue('docroot') . '/sites/default/settings/local.settings.php')
         ->from('\'drupal\'')
         ->to('\'acquia\'')
         ->run();
-      $this->taskReplaceInFile($this->getConfigValue('docroot')  . '/sites/default/settings/local.settings.php')
+      $this->taskReplaceInFile($this->getConfigValue('docroot') . '/sites/default/settings/local.settings.php')
         ->from("host' => 'localhost',")
         ->to("host' => 'database',")
         ->run();
@@ -113,7 +113,7 @@ class LandoCommand extends BltTasks {
       throw new BltException("Could not init local BLT or settings files.");
     }
 
-      $this->say("<info>A pre-configured Lando file was copied to your repository root. Please customize as needed then run <comment>lando start</comment>.</info>");
+    $this->say("<info>A pre-configured Lando file was copied to your repository root. Please customize as needed then run <comment>lando start</comment>.</info>");
   }
 
 }
