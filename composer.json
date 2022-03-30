@@ -10,7 +10,9 @@
       "role": "Maintainer"
     }
   ],
-  "require": {},
+  "require": {
+      "acquia/blt-behat": "*"
+  },
   "extra": {},
   "autoload": {
     "psr-4": {
