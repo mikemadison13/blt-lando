@@ -5,10 +5,10 @@ config:
   xdebug: false
   php: '7.4'
 services:
-  xdebug: false
-  config:
-    php: .lando/php.ini
   appserver:
+    xdebug: false
+    config:
+      php: .lando/php.ini
     build_as_root:
       - apt-get update
       - apt-get install libxss1
