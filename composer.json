@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Lando integration for Acquia BLT.",
     "license": "GPL-2.0+",
-    "authors":[
+    "authors": [
         {
             "name": "Mike Madison",
             "homepage": "https://mikemadison.net",
