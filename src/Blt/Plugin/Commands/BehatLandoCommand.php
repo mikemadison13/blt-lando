@@ -3,6 +3,7 @@
 namespace Acquia\BltLando\Blt\Plugin\Commands;
 
 use Acquia\BltBehat\Blt\Plugin\Commands\BehatTestCommand;
+use Acquia\Blt\Robo\Common\EnvironmentDetector;
 
 class BehatLandoCommand extends BehatTestCommand {
 
@@ -14,8 +15,10 @@ class BehatLandoCommand extends BehatTestCommand {
    * {@inheritdoc}
    */
   public function behat(){
+    parent::initialize();
+    parent::setupBehat();
     // Fallback to original Behat command unless lando is enabled.
-    if (!$this->getConfigValue('lando.enable')) {
+    if (!$this->getConfigValue('lando.enable') || EnvironmentDetector::isCiEnv()) {
       parent::behat();
     }
 
