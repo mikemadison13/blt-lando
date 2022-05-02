@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  runs-on: ubuntu-16.04
+  container:
+    image: devwithlando/php:8.0-apache-3
+  steps:
+    - name: Install dependencies
+      run: |
+        composer validate
+        composer self-update
+        composer install
