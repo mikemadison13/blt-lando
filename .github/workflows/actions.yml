@@ -26,4 +26,5 @@ jobs:
           composer install
       - name: Run tests
         run: |
+          composer require acquia/blt ^13
           composer test

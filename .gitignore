@@ -3,3 +3,8 @@
 
 .phpunit.result.cache
 composer.lock
+
+# BLT Artifacts
+blt/
+example-README.md
+salt.txt
