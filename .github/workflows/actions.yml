@@ -24,3 +24,6 @@ jobs:
           composer validate
           composer self-update
           composer install
+      - name: Run tests
+        run: |
+          composer test
