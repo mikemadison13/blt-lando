@@ -1,5 +1,6 @@
 Acquia BLT Lando integration
 ====
+![Build Status](https://github.com/mikemadison13/blt-lando/actions/workflows/actions.yml/badge.svg?main)
 
 This is an [Acquia BLT](https://github.com/acquia/blt) plugin providing [Lando](https://lando.dev/) integration.
 
