@@ -105,6 +105,7 @@ Make sure to set the database credentials in each site's settings file to match.
 
 ## Adding Solr
 
+### Configuring a Lando Solr Service
 The .lando.yml file included with this plugin does not include an Apache Solr service by default because not all projects need Solr!
 
 However, if you wish to use Solr, simply add an additional service to the .lando.yml file like the following:
@@ -115,23 +116,55 @@ services:
     type: solr:7.7
     core: drupal
     portforward: true
+    config:
+      dir: .lando/solr
 ```
+
+The config directory's contents can be downloaded from the Acquia Cloud after configuring solr there (look for a 'download configset' link).
 
 Then rebuild your VM using `lando rebuild`.
 
-Note that for Search API you'll need the following information:
+I've used [this blog](https://thinktandem.io/blog/2019/08/02/drupal-8-search-api-solr-lando-platform-sh/) in the past as a reference and it's terrific.
 
+### Configuring Drupal
+
+Note that for Search API you'll need the following information for a local server:
+
+```
 Connector: standard
 scheme: http
 host: solr
 port: 8983
 path: /
 core: drupal
+```
 
 notes:
 * the core is configurable so if you want it to be something else, change the core definition in the service definition and update the solr config to be the same!
 * the internal / localhost connectivity for the server is NOT the same as the service url that lando will report (and that's ok)
 * even though Search API ships a config file, I have not been able to get the solr service to recognize and pull the config file from the appserver (so there is not currently a config path here)
+
+### Local Overrides
+
+Once you have the local server defined, put the configuration in your local [config split](https://mikemadison.net/blog/2021/1/22/tutorial-per-environment-config-for-drupal-9-search).
+
+You also need to manipulate your search indexes so that they will utilize the local server on your local. This can be done with a $config override in a local settings file like:
+
+```php
+$config['search_api.server.acquia_search_solr_search_api_solr_server']['status'] = false;
+$config['search_api.index.acquia_search_index']['server'] = 'local';
+$config['search_api.index.acquia_search_index']['status'] = true;
+$config['search_api.index.acquia_search_index']['read_only'] = false;
+```
+
+This config override will:
+
+- disable the Cloud based Acquia server
+- change the index to the local server
+- ensure the index is enabled (as it may become disabled locally when the Acquia server is unreachable)
+- ensure the index isn't read only (as it may become read only when the Acquia server is unreachable)
+
+You will need to repeat the 2nd - 4th lines of this example for each index in your codebase.
 
 ## Debugging with XDebug
 
