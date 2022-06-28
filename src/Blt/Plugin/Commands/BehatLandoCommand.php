@@ -21,20 +21,21 @@ class BehatLandoCommand extends BehatTestCommand {
     if (!$this->getConfigValue('lando.enable') || EnvironmentDetector::isCiEnv()) {
       parent::behat();
     }
+    else {
+      // Log config for debugging purposes.
+      $this->logConfig($this->getConfigValue('behat'), 'behat');
+      $this->logConfig($this->getInspector()->getLocalBehatConfig()->export());
+      $this->createReportsDir();
 
-    // Log config for debugging purposes.
-    $this->logConfig($this->getConfigValue('behat'), 'behat');
-    $this->logConfig($this->getInspector()->getLocalBehatConfig()->export());
-    $this->createReportsDir();
-
-    try {
-      $this->launchDocker();
-      $this->executeBehatTests();
-    }
-  catch (\Exception $e) {
-      // Kill web driver a server to prevent Pipelines from hanging after fail.
-      $this->killWebDriver();
-      throw $e;
+      try {
+        $this->launchDocker();
+        $this->executeBehatTests();
+      }
+      catch (\Exception $e) {
+        // Kill web driver a server to prevent Pipelines from hanging after fail.
+        $this->killWebDriver();
+        throw $e;
+      }
     }
   }
 
