@@ -5,6 +5,12 @@ config:
   xdebug: false
   php: '7.4'
 services:
+  chromedriver:
+    type: compose
+    services:
+      image: isholgueras/chrome-headless:latest
+      # Lando always overrides the default entrypoint.
+      command: chromedriver --verbose --whitelisted-ips=
   appserver:
     xdebug: false
     config:
@@ -15,9 +21,6 @@ services:
       - echo "Run additional build commands here. Run lando rebuild after updating this file."
       - curl -sL https://deb.nodesource.com/setup_14.x | bash -
       - apt install -y nodejs
-      - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      - apt install -y ./google-chrome-stable_current_amd64.deb
-      - rm google-chrome-stable_current_amd64.deb
     overrides:
       # Pass SSH keys.
       volumes:
@@ -30,8 +33,6 @@ services:
         PHP_IDE_CONFIG: "serverName=appserver"
         DRUSH_OPTIONS_URI: "https://<host_name>/"
         SSH_AUTH_SOCK: /run/host-services/ssh-auth.sock
-      cap_add:
-        - SYS_ADMIN
 tooling:
   blt:
     service: appserver
