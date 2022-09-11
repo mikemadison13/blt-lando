@@ -40,6 +40,21 @@ Note: the template YAML file assumes standard BLT steps for builds and is based 
 
 5. Once Lando has been provisioned, run `lando blt setup` to install Drupal via BLT.
 
+### Accessing Drupal Logs
+To access Drupal logs you need to enable the syslog module available in Drupal CORE and 
+then execute `lando logs-drupal` command.
+
+It by default tails the logs. For searching inside logs you can check in `/var/logs/drupal.log` file
+
+Note: syslog service is started after you run `lando logs-drupal` post every lando start or restart.
+
+### Using XHPROF
+To use XHPROF you just need to turn on the [XHPROF](https://www.drupal.org/project/xhprof) module and 
+configure it to use tideways, it should be configured automatically on install.
+
+You can access the reports from the admin screen of XHPROF module inside Drupal itself. No separate GUI 
+is configured as of now in the setup.
+
 ## Constraining Composer
 
 Now that composer 2 is out, Lando should default to composer 2. HOWEVER if you are running much older versions of Drupal, you may still need composer 1. You can add this into your project manually with the following config key:
