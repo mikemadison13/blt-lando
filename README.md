@@ -40,7 +40,7 @@ Note: the template YAML file assumes standard BLT steps for builds and is based 
 
 5. Once Lando has been provisioned, run `lando blt setup` to install Drupal via BLT.
 
-6. To run the behat command, it now requires the behat plugin (acquia/blt-behat) to be added manually.
+Note: To run the behat command, it now requires the behat plugin (acquia/blt-behat) to be added manually.
 
 ## Constraining Composer
 
