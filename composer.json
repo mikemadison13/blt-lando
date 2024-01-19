@@ -10,9 +10,6 @@
             "role": "Maintainer"
         }
     ],
-    "require": {
-        "acquia/blt-behat": "*"
-    },
     "require-dev": {
         "acquia/blt": "^13",
         "php-coveralls/php-coveralls": "^2",

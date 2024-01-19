@@ -40,6 +40,8 @@ Note: the template YAML file assumes standard BLT steps for builds and is based 
 
 5. Once Lando has been provisioned, run `lando blt setup` to install Drupal via BLT.
 
+Note: To run the behat command, it now requires the behat plugin (acquia/blt-behat) to be added manually.
+
 ## Constraining Composer
 
 Now that composer 2 is out, Lando should default to composer 2. HOWEVER if you are running much older versions of Drupal, you may still need composer 1. You can add this into your project manually with the following config key:
